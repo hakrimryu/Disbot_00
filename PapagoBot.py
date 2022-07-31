@@ -15,7 +15,7 @@ with open('config.yml') as f:
 
 ###############################################################
 #discord bot tokken
-token = keys['Keys']['discordAPIToken']
+token = os.environ['Discord_token'] #keys['Keys']['discordAPIToken']
 #Naver Open API application ID
 client_id = keys['Keys']['client_id']
 #Naver Open API application token

@@ -3,7 +3,6 @@
 #No matter to use it as non-commercial.
 #Papago API Reference : https://developers.naver.com/docs/nmt/reference/
 
-from turtle import color, title
 import discord
 import os
 import random
@@ -142,7 +141,7 @@ async def on_message(message): # on_message() event : when the bot has recieved 
     #######################
     if message.content.startswith("~주사위"):
         a = random.randrange(1,1000)
-        embed = discord.Embed(title = "", description = None, color=0xFF0000)
+        embed = discord.Embed(title = "", description = "", color=0xFF0000)
         embed.add_field(name = f"{message.author.display_name}님의 주사위가 데굴데굴", value = f":game_die: {str(a)}가 나왔습니다. (1-999)", inline = False)
         await message.channel.send(embed=embed)
 

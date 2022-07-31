@@ -2,6 +2,7 @@ import ast
 import discord
 import asyncio
 from discord.ext import commands
+import os
 
 # command_prefix 안에는 원하는 접두사를 넣어주면 된다.
 # ex) !, / ....
@@ -19,5 +20,5 @@ async def on_ready():
 async def Hello(ctx):
     await ctx.send("Hello world!")
 
-
-bot.run('MTAwMjIyMjAwNTk1NDgwOTg1Nw.GK7mgH.1uqdksaj3G17QiNPZcV1UZ0hFc2S0NLUj5xHR4')
+access_token = os.environ["BOT_TOKEN"]
+bot.run(access_token)

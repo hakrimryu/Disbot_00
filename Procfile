@@ -1,1 +1,1 @@
-woker: python test.py
+woker: python PapagoBot.py

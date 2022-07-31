@@ -132,7 +132,7 @@ async def on_message(message): # on_message() event : when the bot has recieved 
 
     if message.content.startswith("~help"):
         embed = discord.Embed(title="Command information", color=0x8A0829, description=
-        "[Translation Command : 번역 명령어]\nKorean -> English : ~ke\nEnglish -> Korean : ~ek\nKorean -> Chinese : ~kc\nChinese -> Korean : ~ck\nKorean -> Japanese : ~kj\nJapanese -> Korean : ~jk\nEnter the text to be translated after each command.\nEx)~ck 大家好\n[Dicegame Command : 주사위게임 명령어]\n주사위 게임 : ~주사위")
+        "[Translation Command : 번역 명령어]\nKorean -> English : ~ke\nEnglish -> Korean : ~ek\nKorean -> Chinese : ~kc\nChinese -> Korean : ~ck\nKorean -> Japanese : ~kj\nJapanese -> Korean : ~jk\nEnter the text to be translated after each command.\nEx)~ck 大家好\n[Dicegame Command : 주사위게임 명령어]\n\n주사위 게임 : ~주사위")
         embed.set_footer(text="Inquiry. ADOYO. API provided by Naver Open API")
         await message.channel.send(embed=embed)
 

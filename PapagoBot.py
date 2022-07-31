@@ -5,6 +5,7 @@
 
 import discord
 import os
+import random
 from asyncio import *
 from discord.ext import commands
 from urllib.error import HTTPError, URLError
@@ -22,9 +23,10 @@ streamInstance = dataProcessStream(client_id,client_secret)
 ###############################################################
 
 client = discord.Client()
+client = commands.Bot(command_prefix="~")
 @client.event # Use these decorator to register an event.
 async def on_ready(): # on_ready() event : when the bot has finised logging in and setting things up
-    await client.change_presence(status=discord.Status.online, activity=discord.Game("!help [translation command]"))
+    await client.change_presence(status=discord.Status.online, activity=discord.Game("~help [translation command]"))
     print("New log in as {0.user}".format(client))
 
 @client.event
@@ -132,7 +134,15 @@ async def on_message(message): # on_message() event : when the bot has recieved 
         embed = discord.Embed(title="Command information", color=0x8A0829, description=
         "Korean -> English : ~ke\nEnglish -> Korean : ~ek\nKorean -> Chinese : ~kc\nChinese -> Korean : ~ck\nKorean -> Japanese : ~kj\nJapanese -> Korean : ~jk\nEnter the text to be translated after each command.\nEx)~ck 大家好")
         embed.set_footer(text="Inquiry. ADOYO. API provided by Naver Open API")
+        await message.channel.send(embed=embed)
 
+    #######################
+    # 주사위
+    #######################
+    if message.content.startswith("~주사위"):
+        a = random.randrange(1,1000)
+        embed = discord.Embed(title = "", description = None, color=0xFF0000)
+        embed.add_field(name = f"{message.author.display_name}님의 주사위가 데굴데굴", value = f":game_die: {str(a)}가 나왔습니다. (1-999)", inline = False)
         await message.channel.send(embed=embed)
 
 client.run(token)

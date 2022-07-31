@@ -3,6 +3,7 @@
 #No matter to use it as non-commercial.
 #Papago API Reference : https://developers.naver.com/docs/nmt/reference/
 
+from turtle import color, title
 import discord
 import os
 import random

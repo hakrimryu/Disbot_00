@@ -3,7 +3,7 @@
 #No matter to use it as non-commercial.
 #Papago API Reference : https://developers.naver.com/docs/nmt/reference/
 
-from pydoc import cli
+from unicodedata import name
 import discord
 import os
 import random
@@ -55,7 +55,7 @@ emojiLetters = [
 ###############################################################
 
 client = discord.Client()
-bot = commands.Bot(command_prefix="~")
+client = commands.Bot(command_prefix="~")
 
 
 @client.event  # Use these decorator to register an event.
@@ -69,6 +69,10 @@ def embed_constructor(title, description, author, footer):
     embed.set_author(name=author, icon_url=author.avatar_url)
     embed.set_footer(text=footer)
     return embed
+
+@client.command(name='투표')
+async def roll(ctx):
+    await ctx.send('투표 시작')
 
 
 @client.event
@@ -192,10 +196,11 @@ async def on_message(message):  # on_message() event : when the bot has recieved
                         value=f":game_die: {str(a)}가 나왔습니다. (1-999)", inline=False)
         await message.channel.send(embed=embed)
 
-bot.event
-async def test(ctx, duration="0:0:0", multiple="single", question="Question", *answers):
-    print="ddddddddd"
+    if message.content.startswith("~투표"):
+        async def test():
+            print("Bot is ready")
+
+
 
 
 client.run(token)
-bot.run(token)

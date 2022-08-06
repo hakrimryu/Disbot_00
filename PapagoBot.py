@@ -196,13 +196,8 @@ async def on_message(message):  # on_message() event : when the bot has recieved
                         value=f":game_die: {str(a)}가 나왔습니다. (1-999)", inline=False)
         await message.channel.send(embed=embed)
 
-    if message.content.startswith("~test"):
-        trsText = message.content.split(" ")
-        await message.channel.send(trsText)
-
-
 @client.command(name='test')
-async def poll(ctx, duration="0:0:0", multiple="single", question="Question", *answers):
+async def test(ctx, duration="0:0:0", multiple="single", question="Question", *answers):
     # Poll attributes
     duration = list(map(int, duration.split(":")))
     multi = False

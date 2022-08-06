@@ -191,13 +191,13 @@ async def on_message(message):  # on_message() event : when the bot has recieved
                         value=f":game_die: {str(a)}가 나왔습니다. (1-999)", inline=False)
         await message.channel.send(embed=embed)
 
-    if message.content.startswith("~투표"):
-        async def test():
-            print("Bot is ready")
+    if message.content.startswith("투표1"):
+        async def roll(ctx):
+            await ctx.send('투표 시작')
 
 
 @client.command(name='투표')
 async def roll(ctx):
-    await ctx.send('투표 시작')
+            await ctx.send('투표 시작')
 
 client.run(token)

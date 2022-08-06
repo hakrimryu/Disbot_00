@@ -182,7 +182,7 @@ async def on_message(message):  # on_message() event : when the bot has recieved
 
     if message.content.startswith("~help"):
         embed = discord.Embed(title="Command information", color=0x8A0829,
-                              description="[Translation Command : 번역 명령어]\nKorean -> English : ~ke\nEnglish -> Korean : ~ek\nKorean -> Chinese : ~kc\nChinese -> Korean : ~ck\nKorean -> Japanese : ~kj\nJapanese -> Korean : ~jk\nEnter the text to be translated after each command.\nEx)~ck 大家好\n\n[Dicegame Command : 기타 명령어]\n주사위 게임 : ~주사위\n투표 : ex) ~vote 0:0:10 \"질문\" \"내용1\" \"내용2\" ....\n\n[추후 업데이트 예정]\n1. 육의전 검색\n\n\n[BUG]\n간혹 투표 생성시 이모지가 사라지는 현상이 있습니다. \n투표 삭제후 새로 등록해 주세요.}")
+                              description="[Translation Command : 번역 명령어]\nKorean -> English : ~ke\nEnglish -> Korean : ~ek\nKorean -> Chinese : ~kc\nChinese -> Korean : ~ck\nKorean -> Japanese : ~kj\nJapanese -> Korean : ~jk\nEnter the text to be translated after each command.\nEx)~ck 大家好\n\n[Dicegame Command : 기타 명령어]\n1. 주사위 게임 : ~주사위\n\n2.투표 : ex) ~vote 0:0:10 \"질문\" \"내용1\" \"내용2\" ....\n\n[추후 업데이트 예정]\n1. 육의전 검색\n\n\n[BUG]\n간혹 투표 생성시 이모지가 사라지는 현상이 있습니다. \n투표 삭제후 새로 등록해 주세요.")
         embed.set_footer(text="Inquiry. ADOYO. API provided by Naver Open API")
         await message.channel.send(embed=embed)
 

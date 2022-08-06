@@ -196,7 +196,7 @@ async def on_message(message):  # on_message() event : when the bot has recieved
                         value=f":game_die: {str(a)}가 나왔습니다. (1-999)", inline=False)
         await message.channel.send(embed=embed)
 
-@client.command(name='투표')
+@client.command()
 @commands.is_owner
 async def vote(ctx, duration="0:0:0", question="질문", *answers):
     # Poll attributes

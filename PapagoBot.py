@@ -197,7 +197,6 @@ async def on_message(message):  # on_message() event : when the bot has recieved
         await message.channel.send(embed=embed)
 
 @client.command()
-@commands.is_owner
 async def vote(ctx, duration="0:0:0", question="질문", *answers):
     # Poll attributes
     duration = list(map(int, duration.split(":")))

@@ -3,6 +3,7 @@
 #No matter to use it as non-commercial.
 #Papago API Reference : https://developers.naver.com/docs/nmt/reference/
 
+from email import message
 from unicodedata import name
 import discord
 import os
@@ -72,6 +73,7 @@ def embed_constructor(title, description, author, footer):
 
 @client.event
 async def on_message(message):  # on_message() event : when the bot has recieved a message
+    await client.process_commands(message)
     def sendmsg(resultPackage) -> discord.Embed:
         if resultPackage['status']["code"] < 300:
             embed = discord.Embed(
@@ -193,7 +195,7 @@ async def on_message(message):  # on_message() event : when the bot has recieved
 
 
 @client.command(name='test')
-async def roll(ctx, a1, a2):
-            await ctx.send(f'투표 시작 {a1} {a2}')
+async def roll(ctx, a1):
+            await ctx.send(f'투표 시작 {a1}')
 
 client.run(token)

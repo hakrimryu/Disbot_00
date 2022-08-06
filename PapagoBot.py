@@ -73,7 +73,6 @@ def embed_constructor(title, description, author, footer):
 
 @client.event
 async def on_message(message):  # on_message() event : when the bot has recieved a message
-    await client.process_commands(message)
     def sendmsg(resultPackage) -> discord.Embed:
         if resultPackage['status']["code"] < 300:
             embed = discord.Embed(
@@ -88,6 +87,8 @@ async def on_message(message):  # on_message() event : when the bot has recieved
             embed = discord.Embed(
                 title="Error Code", description=resultPackage['status']['code'], color=0x5CD1E5)
             return embed
+    
+    await client.process_commands(message)
 
     #To user who sent message
     # await message.author.send(msg)

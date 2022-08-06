@@ -3,6 +3,8 @@
 #No matter to use it as non-commercial.
 #Papago API Reference : https://developers.naver.com/docs/nmt/reference/
 
+import asyncio
+import datetime
 from email import message
 from unicodedata import name
 import discord
@@ -56,7 +58,7 @@ emojiLetters = [
 ###############################################################
 
 client = discord.Client()
-client = commands.Bot(command_prefix="~")
+client = commands.Bot(command_prefix="~", help_command=None)
 
 
 @client.event  # Use these decorator to register an event.
@@ -198,8 +200,89 @@ async def on_message(message):  # on_message() event : when the bot has recieved
         trsText = message.content.split(" ")
         await message.channel.send(trsText)
 
-##@client.command(name='test')
-##async def roll(ctx, a1):
-##            await ctx.send(f'투표 시작 {a1}')
+
+@client.command(name='test')
+async def poll(ctx, duration="0:0:0", multiple="single", question="Question", *answers):
+    # Poll attributes
+    duration = list(map(int, duration.split(":")))
+    multi = False
+    if multiple == "multiple":
+        multi = True
+    emoji_answer = {}
+    voters = []
+    votes = {}
+    total_votes = 0
+    end_datetime = datetime.datetime.now() + datetime.timedelta(hours=duration[0], minutes=duration[1], seconds=duration[2])
+    description = "*Voting open until "
+    options = ""
+
+    # Construct poll answers
+    for i, answer in enumerate(answers):
+        options += emojiLetters[i] + "     " + answer + "\n"
+        emoji_answer[emojiLetters[i]] = answer
+
+    # Construct poll description
+    description += "`" + end_datetime.strftime("%b %d, %Y, %I:%M %p") + "`*\n\n" + options
+
+    # Construct votes dictionary
+    for answer in answers:
+        votes[answer] = []
+
+    # Send poll message
+    message = await ctx.send(embed=
+                             embed_constructor(question, description, ctx.author, "# of voters: " + str(len(voters)) + "\n# of votes: " + str(total_votes)))
+
+    # Display poll in console
+    print(question + "\n" + description + "\n" + str(votes))
+
+    for i, answer in enumerate(answers):
+        await message.add_reaction(emojiLetters[i])
+
+    # Ensure reaction is to the poll message and the reactor is not the bot
+    def check(reaction, user):
+        return reaction.message.id == message.id and user.id != 797601108268155001
+
+    # Close the poll after a certain amount of time has elapsed
+    start_time = datetime.datetime.now()
+    while True:
+        try:
+            reaction, user = await client.wait_for('reaction_add', timeout=0.1, check=check)
+            await message.remove_reaction(reaction, user)
+
+            # Check if the user has already voted
+            if multi:
+                if user not in voters:
+                    voters.append(user)
+                if user not in votes[emoji_answer[reaction.emoji]]:
+                    votes[emoji_answer[reaction.emoji]].append(user)
+                    total_votes += 1
+                    await message.edit(
+                        embed=embed_constructor(question, description, ctx.author, "# of voters: " + str(len(voters)) + "\n# of votes: " + str(total_votes)))
+
+            if user not in voters:
+                voters.append(user)
+                votes[emoji_answer[reaction.emoji]].append(user)
+                total_votes += 1
+                await message.edit(
+                    embed=embed_constructor(question, description, ctx.author, "# of voters: " + str(len(voters)) + "\n# of votes: " + str(total_votes)))
+
+            print(str(votes) + " Total votes: " + str(total_votes))
+
+        except asyncio.TimeoutError:
+            if datetime.datetime.now() > start_time + datetime.timedelta(hours=duration[0], minutes=duration[1], seconds=duration[2]):
+                break
+
+    await message.delete()
+    print("Poll closed")
+
+    # Send message of poll results
+    results = ""
+    for i, answer in enumerate(votes):
+        results += emojiLetters[i] + "`" + str(len(votes[answer])) + "` | "
+
+    description = "*Voting results*\n\n" + options + "\n" + results
+
+    await ctx.send(embed=embed_constructor(question, description[:-2], ctx.author, "# of voters: " + str(len(voters)) + "\n# of votes: " + str(total_votes)))
+
 
 client.run(token)

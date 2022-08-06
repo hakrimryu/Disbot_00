@@ -210,7 +210,7 @@ async def test(ctx, duration="0:0:0", question="질문", *answers):
     votes = {}
     total_votes = 0
     end_datetime = datetime.datetime.now() + datetime.timedelta(hours=duration[0], minutes=duration[1], seconds=duration[2])
-    description = "*Voting open until "
+    description = "*투표 마감시간 "
     options = ""
 
     # Construct poll answers
@@ -227,7 +227,7 @@ async def test(ctx, duration="0:0:0", question="질문", *answers):
 
     # Send poll message
     message = await ctx.send(embed=
-                             embed_constructor(question, description, ctx.author, "# of voters: " + str(len(voters)) + "\n# of votes: " + str(total_votes)))
+                             embed_constructor(question, description, ctx.author, "# 총 투표 수: " + str(total_votes)))
 
     # Display poll in console
     print(question + "\n" + description + "\n" + str(votes))
@@ -254,32 +254,32 @@ async def test(ctx, duration="0:0:0", question="질문", *answers):
                     votes[emoji_answer[reaction.emoji]].append(user)
                     total_votes += 1
                     await message.edit(
-                        embed=embed_constructor(question, description, ctx.author, "# of voters: " + str(len(voters)) + "\n# of votes: " + str(total_votes)))
+                        embed=embed_constructor(question, description, ctx.author, "# 총 투표 수: " + str(total_votes)))
 
             if user not in voters:
                 voters.append(user)
                 votes[emoji_answer[reaction.emoji]].append(user)
                 total_votes += 1
                 await message.edit(
-                    embed=embed_constructor(question, description, ctx.author, "# of voters: " + str(len(voters)) + "\n# of votes: " + str(total_votes)))
+                    embed=embed_constructor(question, description, ctx.author, "# 총 투표 수: " + str(total_votes)))
 
-            print(str(votes) + " Total votes: " + str(total_votes))
+            print(str(votes) + " 총 투표 수: " + str(total_votes))
 
         except asyncio.TimeoutError:
             if datetime.datetime.now() > start_time + datetime.timedelta(hours=duration[0], minutes=duration[1], seconds=duration[2]):
                 break
 
     await message.delete()
-    print("Poll closed")
+    print("투표종료")
 
     # Send message of poll results
     results = ""
     for i, answer in enumerate(votes):
         results += emojiLetters[i] + "`" + str(len(votes[answer])) + "` | "
 
-    description = "*Voting results*\n\n" + options + "\n" + results
+    description = "*투표 결과*\n\n" + options + "\n" + results
 
-    await ctx.send(embed=embed_constructor(question, description[:-2], ctx.author, "# of voters: " + str(len(voters)) + "\n# of votes: " + str(total_votes)))
+    await ctx.send(embed=embed_constructor(question, description[:-2], ctx.author, "# 총 투표 수: " + str(total_votes)))
 
 
 client.run(token)

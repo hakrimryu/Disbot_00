@@ -70,11 +70,6 @@ def embed_constructor(title, description, author, footer):
     embed.set_footer(text=footer)
     return embed
 
-@client.command(name='투표')
-async def roll(ctx):
-    await ctx.send('투표 시작')
-
-
 @client.event
 async def on_message(message):  # on_message() event : when the bot has recieved a message
     def sendmsg(resultPackage) -> discord.Embed:
@@ -201,6 +196,8 @@ async def on_message(message):  # on_message() event : when the bot has recieved
             print("Bot is ready")
 
 
-
+@client.command(name='투표')
+async def roll(ctx):
+    await ctx.send('투표 시작')
 
 client.run(token)
